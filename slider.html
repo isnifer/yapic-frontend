@@ -18,7 +18,7 @@
       <div id="slides">
 
         <div class="slides-slider">
-          <div class="slide" id="item-1">
+          <div class="slide view" id="item-1">
             <h2 class="slide-header">Image</h2>
 
             <div class="content">Image</div>
@@ -82,6 +82,7 @@
           elem.children().width(this.slideWidth);
 
           this.children.on('click', function(){
+            $(this).addClass('view').siblings().removeClass('view');
             $('#active').html($(this).html());
           });
 
@@ -95,7 +96,7 @@
         switch(e.keyCode)
         {
           case 37:
-            console.log('left cursor keydown');
+
             break;
           case 38:
             console.log('up cursor keydown');
