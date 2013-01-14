@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>
+      Yandex
+    </title>
+    <script type="text/javascript">
+
+      // 1-e задание
+      (function f() {
+
+        function f() { return 1 }
+
+        return f();
+
+        function f () { return 2 }
+
+      })(); // возвращает 2, т.к. функция f перезаписывает значение ниже return f();
+
+      // 2-e задание
+      var car = {
+         color: 'red',
+         getColor: function() {
+            console.log(this.color);
+         }
+      };
+
+      car.getColor(); // возвращает 'red', потому что обращается к объекту car, который имеет свойство color.
+      var getColor = car.getColor;
+      getColor(); // Возвращает undefined, потому что функция обращается к объекту window, который не содержит в себе свойство color.
+
+      // 3-е задание
+      function Book() {
+         this.name = 'foo'
+      }
+
+      Book.prototype = {
+         getName: function() {
+            return this.name;
+         }
+      };
+
+      var book = new Book(); // создаем book с помощью конструктора
+
+      Book.prototype.getUpperName = function() {
+         return this.name.toUpperCase()
+      };
+
+      book.getUpperName(); // Код вернет FOO, т.к. выполнится функция getUpperName
+
+    </script>
+  </head>
+  <body>
+
+    <!-- 4-e задание -->
+    <a href="((http://yandex.ru))">Яндекс</a>,
+    <a href="((http://yandex.com))">Yandex</a>
+
+    <script type="text/javascript">
+
+      var elems1 = document.getElementsByTagName('a'), // 3
+          elems2 = document.querySelectorAll("a");     // 2
+
+      document.body.appendChild(document.createElement("a"));
+
+      console.log(elems1.length, elems2.length);
+
+      /*
+        getElementsByTagName = это ссылка на массив выбранных элементов 'Live NodeList', который автоматически обновляется при добавлении новых элементов, удовлетворяющих условию выборки
+
+        querySelectorAll = метод возвращающий просто массив выбранных элементов (Static NodeList)
+
+        Поскольку создание нового элемента происходит ниже объявления переменных, то и результат данных отличается.
+        В elems1 хранится уже обновившаяся информация о 3 элементах "а", а в elems2 информация о существовавших элементах до выполнения кода.
+      */
+
+    </script>
+
+  </body>
+</html>
