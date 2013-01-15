@@ -93,7 +93,7 @@
           var pos = this.current;
 
           //Change if arrow keydown
-          pos += ( ~~( dir === 'next' ) || ~~( -(dir === 'prev') ) );
+          pos += ( ~~( dir === 1 ) || ~~( -(dir === -1) ) );
 
           //Rewrite Current Value
           this.current = (pos < 0) ? this.slideLength - 1 : pos % this.slideLength;
@@ -105,42 +105,23 @@
           activeSlide.addClass('view').siblings().removeClass('view');
           $('#active').html(activeSlide.html());
 
-          this.children.on('click', function(){
-            $(this).addClass('view').siblings().removeClass('view');
-            $('#active').html($(this).html());
-
-            this.current = function (){
-              var qq = document.getElementsByClassName('slide'),
-                  qq2 = document.getElementsByClassName('view');
-
-              for (i=0; i<qq.length; i++){
-                if (qq[i] === qq2[0]){
-                  var f = i;
-                }
-              }
-              return f;
-            };
-            return i;
-          });
-
           console.log($('.view').attr('id'));
         };
-
 
         $(document).bind('keydown', function(e){
           switch(e.keyCode)
           {
             case 37:
-              var dir = 'prev';
+              var dir = -1;
               break;
             case 38:
-              dir = 'prev';
+              dir = -1;
               break;
             case 39:
-              dir = 'next';
+              dir = 1;
               break;
             case 40:
-              dir = 'next';
+              dir = 1;
               break;
             default:
               break;
@@ -148,7 +129,11 @@
           slider.setCurrent(dir);
         });
 
-        //Run Once
+        $('.slide').bind('click', function(){
+           console.log($(this).attr('id'));
+        });
+
+        //setCurrent first Run
         slider.setCurrent(this.current);
 
       });
