@@ -8,7 +8,7 @@ function Slider(elem){
   this.elem.width(this.slideWidth * this.slideLength + ((this.slideLength + 1) * 8));
   this.children.width(this.slideWidth);
 
-  this.current = 2;
+  this.current = 0;
 
 }
 
@@ -47,6 +47,4 @@ Slider.prototype.setCurrent = function (dir){
     };
     return i;
   });*/
-
-  console.log($('.view').attr('id'));
 };
