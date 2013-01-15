@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
@@ -36,7 +37,7 @@
 
             <div class="content">
               <img src="img/test.jpg" alt="Image" />
-              <p>Image from <a href="http://rewalls.com/natural/73195-doroga-sneg-tonnel.html">ReWalls.com</a></p>
+              <p>Image from <a id="hfs" href="http://rewalls.com/natural/73195-doroga-sneg-tonnel.html">ReWalls.com</a></p>
             </div>
           </div>
           <div class="slide" id="item-2">
@@ -117,7 +118,11 @@
 
     </div>
 
+    <!-- Подключение файла для задания №5 -->
     <script type="text/javascript" src="js/slider.js"></script>
+
+    <!-- Подключение файла для задания №6 -->
+    <script type="text/javascript" src="js/leftclick.js"></script>
     <script type="text/javascript">
 
       $(document).ready(function(){
@@ -146,6 +151,12 @@
               break;
           }
           slider.setCurrent(dir);
+        });
+
+
+        //6-e задание. Инициализация по событию leftclick. h2 - заголовок текущего слайда.
+        $('h2').bind('leftclick', function(){
+          alert($(this).text());
         });
 
       });
