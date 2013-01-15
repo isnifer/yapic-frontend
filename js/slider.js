@@ -30,21 +30,4 @@ Slider.prototype.setCurrent = function (dir){
   activeSlide.addClass('view').siblings().removeClass('view');
   $('#active').html(activeSlide.html());
 
-  /*this.children.on('click', function(){
-    $(this).addClass('view').siblings().removeClass('view');
-    $('#active').html($(this).html());
-
-    this.current = function (){
-      var qq = document.getElementsByClassName('slide'),
-        qq2 = document.getElementsByClassName('view');
-
-      for (i=0; i<qq.length; i++){
-        if (qq[i] === qq2[0]){
-          var f = i;
-        }
-      }
-      return f;
-    };
-    return i;
-  });*/
 };
