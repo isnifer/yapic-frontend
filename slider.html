@@ -19,19 +19,67 @@
 
         <div class="slides-slider">
           <div class="slide view" id="item-0">
-            <h2 class="slide-header">Some Text 0</h2>
+            <h2 class="slide-header">Awesome Unordered List</h2>
 
-            <div class="content">Some Text 3</div>
+            <div class="content">
+              <ul>
+                <li>Элемент 1</li>
+                <li>Элемент 2</li>
+                <li>Элемент 3</li>
+                <li>Элемент 4</li>
+                <li>Элемент 5</li>
+              </ul>
+            </div>
           </div>
           <div class="slide" id="item-1">
             <h2 class="slide-header">Image</h2>
 
-            <div class="content">Image</div>
+            <div class="content">
+              <img src="test.jpg" alt="Image" />
+              <p>Image from <a href="http://rewalls.com/natural/73195-doroga-sneg-tonnel.html">ReWalls.com</a></p>
+            </div>
           </div>
           <div class="slide" id="item-2">
             <h2 class="slide-header">Table</h2>
 
-            <div class="content">Table</div>
+            <div class="content">
+              <table>
+                <thead>
+                <tr>
+                  <td>Столбец 1</td>
+                  <td>Столбец 2</td>
+                  <td>Столбец 3</td>
+                  <td>Столбец 4</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>Данные 1.1</td>
+                  <td>Данные 2.1</td>
+                  <td>Данные 3.1</td>
+                  <td>Данные 4.1</td>
+                </tr>
+                <tr>
+                  <td>Данные 1.2</td>
+                  <td>Данные 2.2</td>
+                  <td>Данные 3.2</td>
+                  <td>Данные 4.2</td>
+                </tr>
+                <tr>
+                  <td>Данные 1.3</td>
+                  <td>Данные 2.3</td>
+                  <td>Данные 3.3</td>
+                  <td>Данные 4.3</td>
+                </tr>
+                <tr>
+                  <td>Данные 1.4</td>
+                  <td>Данные 2.4</td>
+                  <td>Данные 3.4</td>
+                  <td>Данные 4.4</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
           <div class="slide" id="item-3">
             <h2 class="slide-header">Some Text</h2>
@@ -69,59 +117,30 @@
 
     </div>
 
+    <script type="text/javascript" src="slider.js"></script>
     <script type="text/javascript">
 
       $(document).ready(function(){
 
-        function Slider(elem){
-          this.children = elem.children();
-          this.slideWidth = this.children.width();
-          this.slideLength = this.children.length;
-
-          elem.width(this.slideWidth * this.slideLength + ((this.slideLength + 1) * 8));
-          elem.children().width(this.slideWidth);
-
-          this.current = 0;
-
-        }
-
         var slider = new Slider( $('.slides-slider') );
 
-        Slider.prototype.setCurrent = function (dir){
+        //Run Once
+        slider.setCurrent(this.current);
 
-          //Write value
-          var pos = this.current;
-
-          //Change if arrow keydown
-          pos += ( ~~( dir === 1 ) || ~~( -(dir === -1) ) );
-
-          //Rewrite Current Value
-          this.current = (pos < 0) ? this.slideLength - 1 : pos % this.slideLength;
-
-          //Write id for DOM
-          var activeSlide = $('#item-' + this.current);
-
-          //Make Active and big
-          activeSlide.addClass('view').siblings().removeClass('view');
-          $('#active').html(activeSlide.html());
-
-          console.log($('.view').attr('id'));
-        };
-
-        $(document).bind('keydown', function(e){
+        $(this).bind('keydown', function(e){
           switch(e.keyCode)
           {
             case 37:
-              var dir = -1;
+              var dir = 'prev';
               break;
             case 38:
-              dir = -1;
+              dir = 'prev';
               break;
             case 39:
-              dir = 1;
+              dir = 'next';
               break;
             case 40:
-              dir = 1;
+              dir = 'next';
               break;
             default:
               break;
@@ -129,14 +148,8 @@
           slider.setCurrent(dir);
         });
 
-        $('.slide').bind('click', function(){
-           console.log($(this).attr('id'));
-        });
-
-        //setCurrent first Run
-        slider.setCurrent(this.current);
-
       });
     </script>
+
   </body>
 </html>
