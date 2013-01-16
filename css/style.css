@@ -1,23 +1,23 @@
 html, body{
-  font-size: 100%;
-  height: 100%;
   width: 100%;
+  height: 100%;
+  font-size: 100%;
 }
 
 #container{
+  position: relative;
   width: 100%;
   height: 100%;
-  position: relative;
   background: #000;
 }
 
 /* Active Slide */
 
 #container #active{
+  position: relative;
+  margin: 0 auto;
   width: 70%;
   height: inherit;
-  margin: 0 auto;
-  position: relative;
   background: #fff;
 }
 
@@ -27,39 +27,41 @@ html, body{
 }
 
 #container h2{
-  font: 3em 'Cuprum', Arial;
-  text-align: center;
   margin: 0;
   padding: 0;
+  text-align: center;
+  font: 3em 'Cuprum', Arial;
 }
 
 #container .content ul{
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
 
 #container .content img{
   display: block;
-  max-width: 50%;
   margin: 0 auto;
+  max-width: 50%;
 }
 
 #container .content table{
   margin: 0 auto;
-  font-size: 1em;
+  width: 50%;
   border-spacing: 0;
   border-collapse: collapse;
-  width: 50%;
   text-align: center;
+  font-size: 1em;
 }
 
 #container .content table thead tr td{
-  background: #e5e5e5;
   border: 1px solid #c0c0c0;
+  background: #e5e5e5;
 }
 
 #container .content table tbody tr td{
-  background: #DBDBCC;
   border: 1px solid #BFBFB4;
+  background: #DBDBCC;
 }
 
 #container #active .content table tbody tr:hover td{
@@ -70,23 +72,42 @@ html, body{
 /* Slides Slider */
 
 #container #slides{
+  position: absolute;
+  z-index: 9999;
+  float: left;
+  overflow-x: hidden;
+  overflow-y: auto;
   width: 15%;
   height: 100%;
   background: #000;
-  position: absolute;
-  overflow-x: hidden;
-  overflow-y: auto;
-  float: left;
-  z-index: 9999;
+}
+
+#container #slides::-webkit-scrollbar {
+    width: 8px;
+    background: #e5e5e5;
+}
+
+#container #slides::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+#container #slides::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+
+#container #slides::-webkit-scrollbar-thumb:hover {
+    background: #ababab;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 
 #container #slides .slide{
   display: inline-block;
   float: left;
+  overflow: hidden;
+  margin: 5%;
   width: 90%;
   height: 15%;
   background: #fff;
-  margin: 5%;
   cursor: pointer;
 }
 
@@ -105,12 +126,12 @@ html, body{
 /* ProgressBar */
 
 #container #progress{
-  width: 40%;
-  height: 2%;
-  background: #e5e5e5;
   position: relative;
   margin: -2% auto;
+  width: 40%;
+  height: 2%;
   border-radius: 3px;
+  background: #e5e5e5;
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
 }
 
