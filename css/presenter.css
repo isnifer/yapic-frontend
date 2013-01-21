@@ -186,3 +186,30 @@ Inner Styles
   margin-left: 60px;
 }
 
+#container .slide article div.video{
+  margin: 0 auto;
+}
+
+#container .slide table{
+  margin: 40px 0 0;
+  width: 70%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  text-align: center;
+  font: 1.5em "PTSansRegular", Arial;
+}
+
+#container .slide table thead tr td{
+  border: 1px solid #c0c0c0;
+  background: #e5e5e5;
+}
+
+#container .slide table tbody tr td{
+  border: 1px solid #BFBFB4;
+  background: #DBDBCC;
+}
+
+#container .slide table tbody tr:hover td{
+  background: #BCE6E3;
+}
+

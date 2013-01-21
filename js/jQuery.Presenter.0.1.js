@@ -119,7 +119,6 @@
       localStorage.setItem('currentSlide', current);
 
 
-
       $('#' + current).addClass('active');
       that._updatePercentSlider();
       that._updateSlideNum();
@@ -168,7 +167,7 @@
     $('.list .slide').on('click', function(e){
       e.preventDefault();
       that.changeSlide(null, $(this).attr('id'));
-      if (that._isView() === false){
+      if (!that._isView()){
         that._updateBodyState();
       }
     })
