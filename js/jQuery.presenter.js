@@ -26,21 +26,17 @@ Slider.prototype.setCurrent = function (dir){
   this.current = (pos < 0) ? this.slideLength - 1 : pos % this.slideLength;
 
   //Write id for DOM
-  var activeSlide = $('#item-' + this.current);
+  var activeSlide = $('#' + this.current);
 
   //Value for ProgressBar
-  var progressBar = $('#bar'),
+  var progressBar = $('#percent'), numslide = $('#numslide'),
       progressPercent= 100 / this.slideLength * (this.current + 1) ;
 
   //Make Active and big
   activeSlide.addClass('view').siblings().removeClass('view');
   $('#active').html(activeSlide.html());
-  progressBar.animate({width: progressPercent + '%'});
-  if (this.current === 0){
-    progressBar.attr('title', 'Заглавный слайд');
-  } else {
-    progressBar.attr('title', 'Слайд #' + this.current);
-  }
+  progressBar.css({width: progressPercent + '%'});
+  numslide.html(this.current + 1);
 
 };
 
