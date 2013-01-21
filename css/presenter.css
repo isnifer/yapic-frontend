@@ -1,0 +1,34 @@
+html{
+  width: 100%;
+  height: 100%;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  background: #000;
+}
+
+body.view{
+  overflow: hidden;
+  width: 1280px;
+  height: 800px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: #fff;
+  margin: -400px 0 0 -640px;
+  padding: 0;
+}
+
+#container{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+body.view #container .slide{
+  display: none;
+}
+
+body.view #container .slide.active{
+  display: block;
+}

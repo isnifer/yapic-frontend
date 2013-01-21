@@ -2,7 +2,6 @@ function Slider(elem){
 
   this.elem = elem;
   this.children = this.elem.find('.slide');
-  this.slideWidth = this.children.width();
   this.slideLength = this.children.length;
 
   this.current = 0;
@@ -47,14 +46,15 @@ Slider.prototype.setCurrent = function (dir){
 
 Slider.prototype.clickChange = function (elem){
 
-    var qq = document.getElementsByClassName('slide'),
-        qq1 = elem;
+  var qq = document.getElementsByClassName('slide');
 
-    for (i=0; i<qq.length; i++){
-      if (qq[i] === qq1){
-        return i;
-      }
+  for (var i=0; i<qq.length; i++){
+    if (qq[i] === elem){
+      break;
     }
+  }
+
+  return i;
 
 };
 
