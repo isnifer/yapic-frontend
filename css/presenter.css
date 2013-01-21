@@ -5,7 +5,7 @@
 
 html{
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   font-size: 100%;
   margin: 0;
   padding: 0;
@@ -37,18 +37,12 @@ body.view{
   height: 800px;
   box-sizing: border-box;
   margin: 0;
-  padding: 30px 40px;
+  padding: 50px 90px 92px ;
   background: #fff;
 }
 
 #container .slide.active{
   display: block;
-}
-
-#container .slide header{
-  margin: 0;
-  padding: 0;
-  font: 4em "PTSansRegular", Arial;
 }
 
 #container #numpage{
@@ -85,7 +79,17 @@ body.view{
   height: 100%;
   margin: 0;
   padding: 0;
-  -webkit-transform: scale(1);
+  background: url(../img/bg.png) repeat;
+}
+
+.list #container{
+  padding-bottom: 100px;
+}
+
+.list #container:after{
+  content: "";
+  display: block;
+  clear: both;
 }
 
 .list #container .slide{
@@ -98,4 +102,87 @@ body.view{
   -ms-transform: scale(0.4);
   transform: scale(0.4);
   margin: -90px -450px -320px -190px;
+  box-shadow: 28px 35px 40px 5px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
 }
+
+.list #container .slide.active, .list #container .slide:hover{
+  border-radius: 10px;
+  box-shadow: 0 0 0 20px rgba(20,155,223,0.5);
+}
+
+.list #container #progress, .list #container #numpage{
+  display: none;
+}
+
+
+/* Scrollbar for Webkit-based browsers */
+
+::-webkit-scrollbar {
+  width: 12px;
+  background: #e5e5e5;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ababab;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+
+/*
+
+Inner Styles
+
+*/
+
+#container .slide header{
+  margin: 0;
+  padding: 0;
+  font: 4em "PTSansRegular", Arial;
+}
+
+#container .slide header.center{
+  text-align: center;
+}
+
+  #container .slide article img.full-width{
+    display: block;
+    margin: 0 auto;
+    width: 90%;
+    height: 90%;
+  }
+
+  #container .slide article .left{
+    float: left;
+    display: inline-block;
+  }
+
+  #container .slide article .right{
+    float: right;
+    position: relative;
+    top: 40px
+  }
+
+#container .slide span.name{
+  font: bold 1.5em "PTSansBoldItalic", Arial;
+}
+
+
+#container .slide article ol.nice-list{
+  margin: 20px 0 0 0;
+  padding: 0;
+}
+
+#container .slide article ol.nice-list li{
+  font: 2.5em "PTSansNarrow", Arial;
+  line-height: 2.5em;
+  margin-left: 60px;
+}
+

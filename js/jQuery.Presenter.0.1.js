@@ -8,9 +8,22 @@
 
     that.slides = (slide !== undefined) ? document.querySelectorAll(slide) : document.querySelectorAll('.slide');
     that.slideLen = this.slides.length;
-    that.current = (localStorage.currentSlide === 'undefined') ? 'main' : localStorage.currentSlide ;
-    localStorage.setItem('currentSlide', that.current);
 
+    that.setCurrent = function(){
+      that.current = (localStorage.currentSlide === 'undefined') ? 'main' : localStorage.currentSlide ;
+      localStorage.setItem('currentSlide', that.current);
+    };
+
+
+    /**
+     * Check body class
+     *
+     * Return {Boolean}
+     * */
+
+    that._isView = function(){
+      return !!(($(body).attr('class') === 'view'));
+    };
 
     /**
     * Get ResizeRatio for Body
@@ -42,18 +55,6 @@
       return true;
     };
 
-    that._bodyTransform(that._getRatio());
-
-
-    /**
-    * Check if body class="list"
-    *
-    * Return {Boolean}
-    * */
-
-    that._isView = function(){
-      return !!(($(body).attr('class') === 'view'));
-    };
 
     /**
     * Change body class view or list
@@ -62,6 +63,8 @@
     * */
     that._updateBodyState = function(){
       body.className = (that._isView() === true) ? 'list' : 'view';
+      var state = (body.className === 'view') ? that._getRatio() : 'none';
+      that._bodyTransform(state);
     };
 
 
@@ -84,30 +87,52 @@
       $('#bar').css('width', progressPercent);
     };
 
+
+    /**
+     * Change slide on keydown arrows
+     * @private
+     * */
+    that.changeSlide = function(event, fromClick){
+
+      var currentSlide = $('#' + localStorage.currentSlide);
+          currentSlide.removeClass('active');
+
+      var keyChange = function(dir){
+        if (dir === 'next'){
+          var current = (currentSlide.attr('id') === $('.slide:last').attr('id')) ? 'main' : currentSlide.next().attr('id');
+        } else {
+          current = (currentSlide.attr('id') === $('.slide:first').attr('id')) ? $('.slide:last').attr('id') : currentSlide.prev().attr('id');
+        }
+        return current;
+      };
+
+      var clickChange = function(fromClick){
+        return fromClick;
+      };
+
+      if (event){
+        current = keyChange(event);
+      } else if (fromClick){
+        current = clickChange(fromClick);
+      }
+
+      localStorage.setItem('currentSlide', current);
+
+
+
+      $('#' + current).addClass('active');
+      that._updatePercentSlider();
+      that._updateSlideNum();
+
+    };
+
     // Event Handlers
 
 
     // Scale Presenter when we Resize window
     $(window).bind('resize', function(){
-      that._bodyTransform(that._getRatio());
-    });
-
-    /**
-    * Binding event click and arrows
-    *
-    * */
-    $('#next').on('click', function(e){
-      e.preventDefault();
-      var currentSlide = $('#' + localStorage.currentSlide);
-          currentSlide.removeClass('active');
-
-      var current = (currentSlide.attr('id') === $('.slide:last').attr('id')) ? 'main' : currentSlide.next().attr('id');
-      localStorage.setItem('currentSlide', current);
-
-      $('#' + localStorage.currentSlide).addClass('active');
-      that._updatePercentSlider();
-      that._updateSlideNum();
-
+      var state = (body.className === 'view') ? that._getRatio() : 'none';
+      that._bodyTransform(state);
     });
 
     /**
@@ -115,21 +140,16 @@
      *
      */
     document.addEventListener('keydown', function(e){
-      e.preventDefault();
       switch (e.keyCode){
         case 37:
-          console.log('left');
-          break;
         case 38:
-          console.log('top');
+          console.log('top or left');
+          that.changeSlide('prev', null);
           break;
         case 39:
-          console.log('right');
-          that._updatePercentSlider();
-          that._updateSlideNum();
-          break;
         case 40:
-          console.log('bottom');
+          console.log('right or bottom');
+          that.changeSlide('next', null);
           break;
         case 27:
           that._updateBodyState();
@@ -138,6 +158,20 @@
           return false;
       }
     });
+
+    if ($('.list .slide').attr('id') === localStorage.currentSlide){
+      $('#' + localStorage.currentSlide).addClass('active');
+    }
+
+
+    // Activate elem by click
+    $('.list .slide').on('click', function(e){
+      e.preventDefault();
+      that.changeSlide(null, $(this).attr('id'));
+      if (that._isView() === false){
+        that._updateBodyState();
+      }
+    })
 
   };
 
