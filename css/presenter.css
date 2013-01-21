@@ -1,3 +1,8 @@
+/*
+  FONTS
+*/
+@import "http://webfonts.ru/import/ptsans.css";
+
 html{
   width: 100%;
   height: 100%;
@@ -17,6 +22,7 @@ body.view{
   background: #fff;
   margin: -400px 0 0 -640px;
   padding: 0;
+  font-size: 14px;
 }
 
 #container{
@@ -25,10 +31,71 @@ body.view{
   height: 100%;
 }
 
-body.view #container .slide{
+#container .slide{
   display: none;
+  width: 1280px;
+  height: 800px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 30px 40px;
+  background: #fff;
 }
 
-body.view #container .slide.active{
+#container .slide.active{
   display: block;
+}
+
+#container .slide header{
+  margin: 0;
+  padding: 0;
+  font: 4em "PTSansRegular", Arial;
+}
+
+#container #numpage{
+  position: absolute;
+  bottom: 8%;
+  left: 10.9375%;
+  font: 2em "PTSansNarrow", Arial;
+  color: #DADAB6;
+}
+
+#container #progress{
+  position: absolute;
+  bottom: 2%;
+  left: 10.9375%;
+  width: 78.125%;
+  height: 40px;
+  border-radius: 5px;
+}
+
+#container #progress #bar{
+  width: 0;
+  height: 15px;
+  background: #149BDF;
+  border-radius: 5px;
+  -webkit-transition: width 0.3s;
+  -moz-transition: width 0.3s;
+  -o-transition: width 0.3s;
+  -ms-transition: width 0.3s;
+  transition: width 0.3s;
+}
+
+.list{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  -webkit-transform: scale(1);
+}
+
+.list #container .slide{
+  position: relative;
+  float: left;
+  display: inline-block;
+  -webkit-transform: scale(0.4);
+  -moz-transform: scale(0.4);
+  -o-transform: scale(0.4);
+  -ms-transform: scale(0.4);
+  transform: scale(0.4);
+  margin: -90px -450px -320px -190px;
 }
