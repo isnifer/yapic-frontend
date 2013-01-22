@@ -75,6 +75,7 @@
      * @returns {Boolean}
      */
     that._bodyTransform = function(transform) {
+
       body.style.WebkitTransform = transform;
       body.style.MozTransform = transform;
       body.style.msTransform = transform;
