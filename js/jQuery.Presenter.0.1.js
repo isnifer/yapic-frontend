@@ -62,7 +62,7 @@
     * Return {string}
     * */
     that._updateBodyState = function(){
-      body.className = (that._isView() === true) ? 'list' : 'view';
+      body.className = (that._isView()) ? 'list' : 'view';
       var state = (body.className === 'view') ? that._getRatio() : 'none';
       that._bodyTransform(state);
     };
@@ -87,6 +87,23 @@
       $('#bar').css('width', progressPercent);
     };
 
+    /**
+     * Check History API
+     *
+     */
+    that.isHistoryApi = function(){
+      return !!(window.history && history.pushState);
+    };
+
+    that.isHistoryHaveSlide = function(){
+      return !!(history.state.slide);
+    };
+
+    that.clearHistory = function(){
+      if (that.isHistoryHaveSlide() && !that._isView()){
+        history.pushState({slide: 'head'}, 'Head', '#head');
+      }
+    };
 
     /**
      * Change slide on keydown arrows
@@ -116,7 +133,12 @@
         current = clickChange(fromClick);
       }
 
+      // Set new currentSlide in Local Storage
       localStorage.setItem('currentSlide', current);
+
+      // Set Slide ID to History API
+      history.pushState({slide: localStorage.currentSlide}, 'Slide', '#' + localStorage.currentSlide);
+
 
 
       $('#' + current).addClass('active');
@@ -142,35 +164,42 @@
       switch (e.keyCode){
         case 37:
         case 38:
-          console.log('top or left');
           that.changeSlide('prev', null);
           break;
         case 39:
         case 40:
-          console.log('right or bottom');
           that.changeSlide('next', null);
           break;
         case 27:
           that._updateBodyState();
+          that.clearHistory();
+          console.log(localStorage.currentSlide);
           break;
         default:
           return false;
       }
     });
 
-    if ($('.list .slide').attr('id') === localStorage.currentSlide){
-      $('#' + localStorage.currentSlide).addClass('active');
-    }
-
-
     // Activate elem by click
-    $('.list .slide').on('click', function(e){
-      e.preventDefault();
+    $('.list .slide').on('click', function(){
       that.changeSlide(null, $(this).attr('id'));
       if (!that._isView()){
         that._updateBodyState();
       }
-    })
+    });
+
+    $(document).ready(function(){
+      (function(){
+        that.setCurrent();
+        $('#' + localStorage.currentSlide).addClass('active');
+        if (!that._isView() && history.state.slide !== 'head'){
+          that.changeSlide(null, localStorage.currentSlide);
+          that._updateBodyState();
+        }
+      })();
+    });
+
+
 
   };
 
