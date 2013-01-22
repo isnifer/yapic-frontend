@@ -34,7 +34,7 @@
     };
 
 
-    /*
+    /**
      * Check slide url in History
      *
      * Return {boolean}
