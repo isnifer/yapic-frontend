@@ -8,14 +8,11 @@
         slideClass = (slide === undefined) ? '.slide' : slide;
 
 
-    that.slides = document.querySelectorAll(slide);
-    that.slideLen = this.slides.length;
+    that.slides = document.querySelectorAll(slideClass);
+    that.slideLen = that.slides.length;
 
-    that.setCurrent = function(){
-      that.current = (localStorage.currentSlide === 'undefined') ? 'main' : localStorage.currentSlide ;
-      localStorage.setItem('currentSlide', that.current);
-    };
 
+    /* ------ Verifications ------- */
 
     /**
      * Check body class
@@ -28,10 +25,31 @@
     };
 
     /**
-    * Get ResizeRatio for Body
-    *
-    * @returns {String}
-    * */
+     * Check History API
+     *
+     * Return {boolean}
+     */
+    that.isHistoryApi = function(){
+      return !!(window.history && history.pushState);
+    };
+
+
+    /*
+     * Check slide url in History
+     *
+     * Return {boolean}
+     * */
+    that.isHistoryHaveSlide = function(){
+      return !!(history.state.slide);
+    };
+
+    /* -----  DOM Transformations ---- */
+
+    /**
+     * Get ResizeRatio for Body
+     *
+     * @returns {String}
+     * */
     that._getRatio = function() {
 
       var resizeRatio = Math.max(
@@ -57,11 +75,10 @@
       return true;
     };
 
-
     /**
     * Change body class view or list
     * @private
-    * Return {string}
+    *
     * */
     that._updateBodyState = function(){
       body.className = (that._isView()) ? 'list' : 'view';
@@ -80,37 +97,20 @@
       $('#numpage').html(numpage);
     };
 
+
     /**
-    * Update percent slider
+    * Update Progress Bar
     * @private
+    *
     * */
     that._updatePercentSlider = function(){
       var progressPercent = ((localStorage.currentSlide === 'main') ? 100 / that.slideLen : 100 / that.slideLen * (localStorage.currentSlide + 1));
       $('#bar').css('width', progressPercent);
     };
 
+
     /**
-     * Check History API
-     *
-     * Return {boolean}
-     */
-    that.isHistoryApi = function(){
-      return !!(window.history && history.pushState);
-    };
-
-
-    /*
-    * Check slide url in History
-    *
-    * Return {boolean}
-    * */
-    that.isHistoryHaveSlide = function(){
-      return !!(history.state.slide);
-    };
-
-
-    /*
-    * Make slideNumber is head, then list (Esc keydown)
+    * Make slideNumber is head in History API, then list (Esc keydown)
     *
     * */
     that.clearHistory = function(){
@@ -120,7 +120,7 @@
     };
 
 
-    /*
+    /**
     * Dive in to slide by Enter key
     *
     * */
@@ -129,6 +129,7 @@
         that._updateBodyState();
       }
     };
+
 
     /**
      * View Slide by click
@@ -145,12 +146,17 @@
     /**
      * Change slide on keydown arrows
      * @private
+     *
      * */
     that.changeSlide = function(event, fromClick){
 
+      // Define currentSlide by id
       var currentSlide = $('#' + localStorage.currentSlide);
-          currentSlide.removeClass('active');
 
+      // Remove prev activeSlide
+      currentSlide.removeClass('active');
+
+      // Change Active Slide by keydown
       var keyChange = function(dir){
         if (dir === 'next'){
           var current = (currentSlide.attr('id') === $(slideClass + ':last').attr('id')) ? 'main' : currentSlide.next().attr('id');
@@ -160,36 +166,44 @@
         return current;
       };
 
+      // Change Active Slide by click
       var clickChange = function(fromClick){
         return fromClick;
       };
 
+      // Check what handler start a function
       if (event){
         current = keyChange(event);
       } else if (fromClick){
         current = clickChange(fromClick);
       }
 
+
       // Set new currentSlide in Local Storage
       localStorage.setItem('currentSlide', current);
 
-      // Set Slide ID to History API
 
+      // Set Slide ID to History API
       history.pushState({slide: localStorage.currentSlide}, 'Slide', '#' + localStorage.currentSlide);
 
-      $('#' + current).addClass('active');
+      // Make slide is Active
+      currentSlide.addClass('active');
+
+      // Update ProgressBar & currentSlide in Local Storage
       that._updatePercentSlider();
       that._updateSlideNum();
 
     };
 
-    /*
+    /**
     * Check History and LocalStorage to load only necessary view (Slide or List of Slides)
     *
     * */
     that.onLoadDOM = function(){
-      that.setCurrent();
       $('#' + localStorage.currentSlide).addClass('active');
+      if (history.state === null){
+        history.pushState({slide: 'head'}, '', '#head');
+      }
       if (!that._isView() && history.state.slide !== 'head'){
         that.changeSlide(null, localStorage.currentSlide);
         that._updateBodyState();
@@ -197,10 +211,7 @@
     };
 
 
-    /*
-    * Event Handlers
-    *
-    * */
+    /* ------- Event Handlers ------ */
 
 
     // Scale Presenter when we Resize window
