@@ -96,12 +96,12 @@ body.view{
   position: relative;
   float: left;
   display: inline-block;
-  -webkit-transform: scale(0.4);
-  -moz-transform: scale(0.4);
-  -o-transform: scale(0.4);
-  -ms-transform: scale(0.4);
-  transform: scale(0.4);
-  margin: -90px -450px -320px -190px;
+  -webkit-transform: scale(0.3);
+  -moz-transform: scale(0.3);
+  -o-transform: scale(0.3);
+  -ms-transform: scale(0.3);
+  transform: scale(0.3);
+  margin: -150px -520px -325px -260px;
   box-shadow: 28px 35px 40px 5px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
@@ -224,5 +224,18 @@ Inner Styles
   font: 1.8em "PTSansItalic", Arial;
   line-height: 2.5em;
   margin-top: 50px;
+}
+
+
+@media screen and (max-width: 1200px) {
+
+  .list #container .slide{
+    -webkit-transform: scale(0.2);
+    -moz-transform: scale(0.2);
+    -o-transform: scale(0.2);
+    -ms-transform: scale(0.2);
+    transform: scale(0.2);
+    margin: -218px -604px -380px -380px;
+  }
 }
 
