@@ -3,10 +3,12 @@
   $.fn.presenter = function(slide){
 
     //Define local variables
-    var that = this;
-    var body = document.body;
+    var that = this,
+        body = document.body,
+        slideClass = (slide === undefined) ? '.slide' : slide;
 
-    that.slides = (slide !== undefined) ? document.querySelectorAll(slide) : document.querySelectorAll('.slide');
+
+    that.slides = document.querySelectorAll(slide);
     that.slideLen = this.slides.length;
 
     that.setCurrent = function(){
@@ -90,20 +92,55 @@
     /**
      * Check History API
      *
+     * Return {boolean}
      */
     that.isHistoryApi = function(){
       return !!(window.history && history.pushState);
     };
 
+
+    /*
+    * Check slide url in History
+    *
+    * Return {boolean}
+    * */
     that.isHistoryHaveSlide = function(){
       return !!(history.state.slide);
     };
 
+
+    /*
+    * Make slideNumber is head, then list (Esc keydown)
+    *
+    * */
     that.clearHistory = function(){
       if (that.isHistoryHaveSlide() && !that._isView()){
         history.pushState({slide: 'head'}, 'Head', '#head');
       }
     };
+
+
+    /*
+    * Dive in to slide by Enter key
+    *
+    * */
+    that.intoSlide = function(){
+      if (!that._isView()){
+        that._updateBodyState();
+      }
+    };
+
+    /**
+     * View Slide by click
+     *
+     */
+    that.viewByClick = function(elem){
+      if (!that._isView()){
+        that.changeSlide(null, elem.attr('id'));
+        that._updateBodyState();
+      }
+    };
+
 
     /**
      * Change slide on keydown arrows
@@ -116,9 +153,9 @@
 
       var keyChange = function(dir){
         if (dir === 'next'){
-          var current = (currentSlide.attr('id') === $('.slide:last').attr('id')) ? 'main' : currentSlide.next().attr('id');
+          var current = (currentSlide.attr('id') === $(slideClass + ':last').attr('id')) ? 'main' : currentSlide.next().attr('id');
         } else {
-          current = (currentSlide.attr('id') === $('.slide:first').attr('id')) ? $('.slide:last').attr('id') : currentSlide.prev().attr('id');
+          current = (currentSlide.attr('id') === $(slideClass + ':first').attr('id')) ? $(slideClass + ':last').attr('id') : currentSlide.prev().attr('id');
         }
         return current;
       };
@@ -137,9 +174,8 @@
       localStorage.setItem('currentSlide', current);
 
       // Set Slide ID to History API
+
       history.pushState({slide: localStorage.currentSlide}, 'Slide', '#' + localStorage.currentSlide);
-
-
 
       $('#' + current).addClass('active');
       that._updatePercentSlider();
@@ -147,7 +183,24 @@
 
     };
 
-    // Event Handlers
+    /*
+    * Check History and LocalStorage to load only necessary view (Slide or List of Slides)
+    *
+    * */
+    that.onLoadDOM = function(){
+      that.setCurrent();
+      $('#' + localStorage.currentSlide).addClass('active');
+      if (!that._isView() && history.state.slide !== 'head'){
+        that.changeSlide(null, localStorage.currentSlide);
+        that._updateBodyState();
+      }
+    };
+
+
+    /*
+    * Event Handlers
+    *
+    * */
 
 
     // Scale Presenter when we Resize window
@@ -173,7 +226,10 @@
         case 27:
           that._updateBodyState();
           that.clearHistory();
-          console.log(localStorage.currentSlide);
+          break;
+        case 13:
+          that.intoSlide();
+          that.changeSlide(null, localStorage.currentSlide);
           break;
         default:
           return false;
@@ -181,25 +237,12 @@
     });
 
     // Activate elem by click
-    $('.list .slide').on('click', function(){
-      that.changeSlide(null, $(this).attr('id'));
-      if (!that._isView()){
-        that._updateBodyState();
-      }
+    $(slideClass).on('click', function(){
+       that.viewByClick($(this));
     });
 
-    $(document).ready(function(){
-      (function(){
-        that.setCurrent();
-        $('#' + localStorage.currentSlide).addClass('active');
-        if (!that._isView() && history.state.slide !== 'head'){
-          that.changeSlide(null, localStorage.currentSlide);
-          that._updateBodyState();
-        }
-      })();
-    });
-
-
+    //Define some default values then page load done
+    that.onLoadDOM();
 
   };
 
