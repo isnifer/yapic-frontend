@@ -1,3 +1,12 @@
+/*
+* jQuery.presenter v.0.1
+*
+* by Anton Kuznetsov
+*
+*
+* */
+
+
 (function($) {
 
   $.fn.presenter = function(slide){
@@ -187,7 +196,7 @@
       history.pushState({slide: localStorage.currentSlide}, 'Slide', '#' + localStorage.currentSlide);
 
       // Make slide is Active
-      currentSlide.addClass('active');
+      $('#' + localStorage.currentSlide).addClass('active');
 
       // Update ProgressBar & currentSlide in Local Storage
       that._updatePercentSlider();
