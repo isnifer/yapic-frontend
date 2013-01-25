@@ -5,4 +5,6 @@
  - Выбор слайда по клику и по Enter (перейти в активный слайд)
  - Выход из показа Esc
 
+Demo: http://kuznetsovanton.ru/yapic/demo.html
+
 
